@@ -19,5 +19,7 @@ public interface VectorInterface {
 
     public Vector minus(Vector aVector);
 
-    public Vector multiply(Vector aVector);
+    public Vector crossProduct(Vector aVector);
+
+    public Double dotProduct(Vector aVector);
 }

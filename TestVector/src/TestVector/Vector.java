@@ -76,32 +76,58 @@ public class Vector implements VectorInterface{
     }
 
     @Override
-    public Vector multiply(Vector aVector) {
+    public Vector crossProduct(Vector aVector) {
         return null;
     }
 
     @Override
+    public Double dotProduct(Vector aVector){
+        if(aVector == null) throw new NullPointerException();
+        if(this.dimension == aVector.dimension){
+            double result=0.0;
+            for(int i=0;i<dimension;i++){
+                result += location[i] * aVector.getLocation()[i];
+            }
+            return result;
+        }
+
+        throw new ArithmeticException();
+    }
+
+    @Override
     public Vector minus(Vector aVector) {
-        return null;
+        if(aVector == null) throw new NullPointerException();
+        if(this.dimension == aVector.dimension){
+            Vector result = new Vector(dimension);
+            double[] resultLocation = new double[dimension];
+
+            for(int i=0;i<dimension;i++){
+                resultLocation[i] = location[i] - aVector.getLocation()[i];
+            }
+            result.setLocation(resultLocation);
+            return result;
+        }
+        throw new ArithmeticException();
     }
 
     @Override
     public Vector add(Vector aVector) {
         if(aVector == null) throw new NullPointerException();
-        Vector result;
         if(this.dimension == aVector.dimension){
-            result = new Vector(dimension);
+            Vector result = new Vector(dimension);
             double[] resultLocation = new double[dimension];
+
             for(int i=0;i<dimension;i++){
                 resultLocation[i] = location[i] + aVector.getLocation()[i];
             }
             result.setLocation(resultLocation);
             return result;
         }
-        return null;
+        throw new ArithmeticException();
+
     }
 
-    public void printLocation(){
+    public void printLocation() {
         String output = "[ ";
         for(int i=0;i<dimension;i++){
             output += location[i];
