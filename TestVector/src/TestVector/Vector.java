@@ -33,6 +33,7 @@ public class Vector implements VectorInterface{
     @Override
     public Boolean setDimension(int d){
         try{
+            if(d<0) throw new ArithmeticException();
             this.dimension = d;
             return true;
         }catch(Exception e){
@@ -66,6 +67,8 @@ public class Vector implements VectorInterface{
     @Override
     public Boolean equals(Vector aVector){
 
+        if(aVector == null) throw new NullPointerException();
+
         if(aVector.getDimension() == dimension){
             for(int i=0;i<dimension;i++){
                 if(location[i] != aVector.getLocation()[i]) return false;
@@ -76,8 +79,23 @@ public class Vector implements VectorInterface{
     }
 
     @Override
-    public Vector crossProduct(Vector aVector) {
-        return null;
+    public Vector crossProduct(Vector aVector) {    //only in 3D vectors
+        if(dimension != 3 || aVector.getDimension() != 3) throw new ArithmeticException();
+        try{
+            Vector resultVector = new Vector(3);
+            double[] resultLocation = new double[3];
+
+            resultLocation[0] = location[1] * aVector.getLocation()[2] - location[2] * aVector.getLocation()[1];
+            resultLocation[1] = location[2] * aVector.getLocation()[0] - location[0] * aVector.getLocation()[2];
+            resultLocation[2] = location[0] * aVector.getLocation()[1] - location[1] * aVector.getLocation()[0];
+            resultVector.setLocation(resultLocation);
+
+            return resultVector;
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     @Override
@@ -128,13 +146,19 @@ public class Vector implements VectorInterface{
     }
 
     public void printLocation() {
-        String output = "[ ";
-        for(int i=0;i<dimension;i++){
-            output += location[i];
-            if(i != dimension-1) output += ", ";
+        try{
+            String output = "[ ";
+            for(int i=0;i<dimension;i++){
+                output += location[i];
+                if(i != dimension-1) output += ", ";
+            }
+            output += " ]";
+            System.out.println(output);
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        output += " ]";
-        System.out.println(output);
+
+
     }
 
 }
